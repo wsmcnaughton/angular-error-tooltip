@@ -15,7 +15,15 @@ import {Component, Input, AfterViewInit, ElementRef, ChangeDetectorRef} from "@a
         {{ content }}
     </div> 
 </div>
-`
+`,
+    styles: [`
+.tooltip-inner {
+    color: #A94442;
+    border: 1px solid #000;
+    background-color: #F2DEDE;
+    font-size: 14px;
+}
+`]
 })
 export class TooltipContent implements AfterViewInit {
 
