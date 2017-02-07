@@ -1,25 +1,25 @@
-# ngx-tooltip
+# ng2-error-tooltip
 
 Simple tooltip control for your angular2 applications using bootstrap3. Does not depend of jquery.
 If you want to use it without bootstrap - simply create proper css classes. Please star a project if you liked it, or create an issue if you have problems with it.
 
-![angular 2 tooltip](https://raw.githubusercontent.com/pleerock/ngx-tooltip/master/resources/tooltip-example.png)
+![angular 2 tooltip](https://raw.githubusercontent.com/NaughtyMC/ng2-error-tooltip/master/resources/tooltip-example.png)
 
 ## Installation
 
 1. Install npm module:
 
-    `npm install ngx-tooltip --save`
+    `npm install ng2-error-tooltip --save`
 
 2. If you are using system.js you may want to add this into `map` and `package` config:
 
     ```json
     {
         "map": {
-            "ngx-tooltip": "node_modules/ngx-tooltip"
+            "ng2-error-tooltip": "node_modules/ng2-error-tooltip"
         },
         "packages": {
-            "ngx-tooltip": { "main": "index.js", "defaultExtension": "js" }
+            "ng2-error-tooltip": { "main": "index.js", "defaultExtension": "js" }
         }
     }
     ```
