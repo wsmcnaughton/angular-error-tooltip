@@ -1,27 +1,27 @@
 {
-    "name": "ng2-error-tooltip",
-    "version": "1.0.0",
+    "name": "angular-error-tooltip",
+    "version": "0.0.1",
     "description": "Angular2 tooltip control specifically designed for error messages.",
     "license": "MIT",
     "readmeFilename": "README.md",
     "private": false,
     "author": {
         "name": "Will McNaughton",
-        "email": "wmcnaughton@scrypt.com"
+        "email": "wsmcnaughton@gmail.com"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/NaughtyMC/ng2-error-tooltip.git"
+        "url": "https://github.com/NaughtyMC/angular-error-tooltip.git"
     },
     "bugs": {
-        "url": "https://github.com/NaughtyMC/ng2-error-tooltip/issues"
+        "url": "https://github.com/NaughtyMC/angular-error-tooltip/issues"
     },
     "tags": [
         "tooltip",
+        "error-message",
+        "angular",
         "angular2",
-        "typescript",
-        "angular2-tooltip",
-        "error-message"
+        "typescript"
     ],
     "peerDependencies": {
         "@angular/core": "^2.0.0"

@@ -3,6 +3,6 @@ build/
 node_modules
 npm-debug.log
 /.vs/ng2-error-tooltip/v14/.suo
-/ng2-error-tooltip.sln
 /.vs/config/applicationhost.config
 /.vs/restore.dg
+/angular-error-tooltip.sln

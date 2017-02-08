@@ -1,33 +1,31 @@
-# ng2-error-tooltip
+# angular-error-tooltip
 
-Simple tooltip control for your angular2 applications using bootstrap3. Does not depend of jquery.
-If you want to use it without bootstrap - simply create proper css classes. Please star a project if you liked it, or create an issue if you have problems with it.
-
-![angular 2 tooltip](https://raw.githubusercontent.com/NaughtyMC/ng2-error-tooltip/master/resources/tooltip-example.png)
+Lightweight tooltip directive that displays a FormControl's error messages to user.
+<!--![angular 2 tooltip](https://raw.githubusercontent.com/NaughtyMC/angular-error-tooltip/master/resources/tooltip-example.png)-->
 
 ## Installation
 
 1. Install npm module:
 
-    `npm install ng2-error-tooltip --save`
+    `npm install angular-error-tooltip --save`
 
 2. If you are using system.js you may want to add this into `map` and `package` config:
 
     ```json
     {
         "map": {
-            "ng2-error-tooltip": "node_modules/ng2-error-tooltip"
+            "angular-error-tooltip": "node_modules/angular-error-tooltip"
         },
         "packages": {
-            "ng2-error-tooltip": { "main": "index.js", "defaultExtension": "js" }
+            "angular-error-tooltip": { "main": "index.js", "defaultExtension": "js" }
         }
     }
     ```
 
 ## Usage
 
-Example of simple usage:
-
+Coming soon...
+<!--
 ```html
 <span tooltip="content to be shown in the tooltip"
       [tooltipDisabled]="false"
@@ -55,11 +53,13 @@ Example of usage with dynamic html content:
     * `tooltipPlacement="top|bottom|left|right"` Indicates where the tooltip should be placed. Default is **"bottom"**.
 * `<tooltip-content>`:
     * `[animation]="true|false"` Indicates if all tooltip should be shown with animation or not. Default is **true**.
-    * `placement="top|bottom|left|right"` Indicates where the tooltip should be placed. Default is **"bottom"**.
+    * `placement="top|bottom|left|right"` Indicates where the tooltip should be placed. Default is **"bottom"**.-->
 
 ## Sample
 
-```typescript
+Coming soon...
+
+<!--```typescript
 import {Component} from "@angular/core";
 import {TooltipModule} from "ngx-tooltip";
 
@@ -68,7 +68,6 @@ import {TooltipModule} from "ngx-tooltip";
     template: `
 <div class="container">
 
-    <!-- regular tooltip -->
     <p>
         It is a long established <span tooltip="Hello fact!"><b>fact</b></span> that a reader will be distracted by the readable content of a page when looking at its layout.
         The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.
@@ -76,7 +75,6 @@ import {TooltipModule} from "ngx-tooltip";
         <span tooltip="various, but not all" tooltipPlacement="right"><b>Various versions</b></span> have evolved over the years, sometimes by accident, <span tooltip="another hint" tooltipPlacement="top"><b>sometimes on purpose</b></span> (injected humour and the like)
     </p>
 
-    <!-- tooltip with dynamic html content -->
     <div>
         <tooltip-content #myTooltip>
             <b>Very</b> <span style="color: #C21F39">Dynamic</span> <span style="color: #00b3ee">Reusable</span>
@@ -110,5 +108,5 @@ export class AppModule {
 }
 ```
 
-Take a look on samples in [./sample](https://github.com/pleerock/ngx-tooltip/tree/master/sample) for more examples of
-usages.
+Take a look on samples in [./sample](https://github.com/NaughtyMC/angular-error-tooltip/tree/master/sample) for more examples of
+usages.-->
