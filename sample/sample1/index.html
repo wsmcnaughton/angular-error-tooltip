@@ -1,5 +1,7 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html>
 <head>
+    <base href="#/">
     <meta>
     <meta charset="UTF-8"/>
     <title>ng2-error-tooltip</title>
@@ -19,6 +21,8 @@
                 "npm:": "node_modules/"
             },
             map: {
+                'app': 'app',
+
                 // angular bundles
                 "@angular/core": "npm:@angular/core/bundles/core.umd.js",
                 "@angular/common": "npm:@angular/common/bundles/common.umd.js",
@@ -57,10 +61,8 @@
             }
         });
     </script>
-    <script>System.import("../../build/es5/sample/sample1/main").catch(function(err){ console.error(err); });</script>
 
 </head>
-<base href="#/">
 <body>
 <div style="margin-top: 200px"></div>
 <app>Loading...</app>
