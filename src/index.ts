@@ -1,27 +1,27 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {Tooltip} from "./Tooltip";
-import {TooltipContent} from "./TooltipContent";
+import {ErrorTooltip} from "./ErrorTooltip";
+import {ErrorTooltipContent} from "./ErrorTooltipContent";
 
-export * from "./Tooltip";
-export * from "./TooltipContent";
+export * from "./ErrorTooltip";
+export * from "./ErrorTooltipContent";
 
 @NgModule({
     imports: [
         CommonModule
     ],
     declarations: [
-        Tooltip,
-        TooltipContent,
+        ErrorTooltip,
+        ErrorTooltipContent,
     ],
     exports: [
-        Tooltip,
-        TooltipContent,
+        ErrorTooltip,
+        ErrorTooltipContent,
     ],
     entryComponents: [
-        TooltipContent
+        ErrorTooltipContent
     ]
 })
-export class TooltipModule {
+export class ErrorTooltipModule {
 
 }

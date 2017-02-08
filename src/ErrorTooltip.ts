@@ -2,18 +2,18 @@ import {
     Directive, HostListener, ComponentRef, ViewContainerRef, Input, ComponentFactoryResolver,
     ComponentFactory
 } from "@angular/core";
-import {TooltipContent} from "./TooltipContent";
+import {ErrorTooltipContent} from "./ErrorTooltipContent";
 
 @Directive({
-    selector: "[tooltip]"
+    selector: "[error-tooltip]"
 })
-export class Tooltip {
+export class ErrorTooltip {
 
     // -------------------------------------------------------------------------
     // Properties
     // -------------------------------------------------------------------------
 
-    private tooltip: ComponentRef<TooltipContent>;
+    private tooltip: ComponentRef<ErrorTooltipContent>;
     private visible: boolean;
 
     // -------------------------------------------------------------------------
@@ -29,7 +29,7 @@ export class Tooltip {
     // -------------------------------------------------------------------------
 
     @Input("tooltip")
-    content: string|TooltipContent;
+    content: string|ErrorTooltipContent;
 
     @Input()
     tooltipDisabled: boolean;
@@ -52,7 +52,7 @@ export class Tooltip {
 
         this.visible = true;
         if (typeof this.content === "string") {
-            const factory = this.resolver.resolveComponentFactory(TooltipContent);
+            const factory = this.resolver.resolveComponentFactory(ErrorTooltipContent);
             if (!this.visible)
                 return;
 
@@ -62,7 +62,7 @@ export class Tooltip {
             this.tooltip.instance.placement = this.tooltipPlacement;
             this.tooltip.instance.animation = this.tooltipAnimation;
         } else {
-            const tooltip = this.content as TooltipContent;
+            const tooltip = this.content as ErrorTooltipContent;
             tooltip.hostElement = this.viewContainerRef.element.nativeElement;
             tooltip.placement = this.tooltipPlacement;
             tooltip.animation = this.tooltipAnimation;
@@ -80,8 +80,8 @@ export class Tooltip {
         if (this.tooltip)
             this.tooltip.destroy();
 
-        if (this.content instanceof TooltipContent)
-            (this.content as TooltipContent).hide();
+        if (this.content instanceof ErrorTooltipContent)
+            (this.content as ErrorTooltipContent).hide();
     }
 
 }

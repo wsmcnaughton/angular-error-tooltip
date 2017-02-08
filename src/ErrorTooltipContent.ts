@@ -1,7 +1,7 @@
 import {Component, Input, AfterViewInit, ElementRef, ChangeDetectorRef} from "@angular/core";
 
 @Component({
-    selector: "tooltip-content",
+    selector: "error-tooltip-content",
     template: `
 <div class="tooltip {{ placement }}"
      [style.top]="top + 'px'"
@@ -25,7 +25,7 @@ import {Component, Input, AfterViewInit, ElementRef, ChangeDetectorRef} from "@a
 }
 `]
 })
-export class TooltipContent implements AfterViewInit {
+export class ErrorTooltipContent implements AfterViewInit {
 
     // -------------------------------------------------------------------------
     // Inputs / Outputs 
