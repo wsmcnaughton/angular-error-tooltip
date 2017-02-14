@@ -1,4 +1,4 @@
-import { Directive, HostListener, ComponentRef, ViewContainerRef, Input, ComponentFactoryResolver, ComponentFactory, OnInit, OnDestroy } from "@angular/core";
+import { Directive, HostBinding, ComponentRef, ViewContainerRef, Input, ComponentFactoryResolver, ComponentFactory, OnInit, OnDestroy } from "@angular/core";
 import { NgControl } from '@angular/forms'
 import { Subscription } from 'rxjs/Subscription';
 import { ErrorTooltipContent } from "./ErrorTooltipContent";
@@ -13,6 +13,7 @@ export class ErrorTooltip implements OnInit, OnDestroy {
     // -------------------------------------------------------------------------
 
     private tooltip: ComponentRef<ErrorTooltipContent>;
+    private tooltipFactory: ComponentFactory<ErrorTooltipContent>;
     private visible: boolean;
     private statusSubscription: Subscription;
 
@@ -32,65 +33,63 @@ export class ErrorTooltip implements OnInit, OnDestroy {
     // -------------------------------------------------------------------------
 
     @Input()
-    tooltipDisabled: boolean;
-
-    @Input()
     tooltipAnimation: boolean = true;
 
     @Input()
     tooltipPlacement: "top"|"bottom"|"left"|"right" = "bottom";
 
     // -------------------------------------------------------------------------
-    // Public Methods
+    // Methods
     // -------------------------------------------------------------------------
 
     ngOnInit() {
+        this.tooltipFactory = this.resolver.resolveComponentFactory(ErrorTooltipContent);
+
         this.statusSubscription = this.control.statusChanges.subscribe(
-            status => console.log(status)  
+            status => this.processStatus(status)
         );
+
+        // initialize tooltip on startup (if applicable)
+        this.processStatus(this.control.control.status as ('VALID' | 'INVALID' | 'PENDING' | 'DISABLED'));
     }
     ngOnDestroy() {
         this.statusSubscription.unsubscribe();
     }
 
-    //@HostListener("focusin")
-    //@HostListener("mouseenter")
-    //show(): void {
-    //    if (this.tooltipDisabled || this.visible)
-    //        return;
+    private processStatus = (status: 'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'): void => {
+        switch (status) {
+            case 'INVALID':
+                this.createOrUpdate();
+                break;
+            case 'VALID':
+            case 'DISABLED':
+                this.destroy();
+                break;
+            case 'PENDING':
+            default:
+                break; // do nothing
+        }
+    }
+    private createOrUpdate = (): void => {
+        if (!this.visible) {
 
-    //    this.visible = true;
-    //    if (typeof this.content === "string") {
-    //        const factory = this.resolver.resolveComponentFactory(ErrorTooltipContent);
-    //        if (!this.visible)
-    //            return;
+            this.visible = true;
 
-    //        this.tooltip = this.viewContainerRef.createComponent(factory);
-    //        this.tooltip.instance.hostElement = this.viewContainerRef.element.nativeElement;
-    //        this.tooltip.instance.content = this.content as string;
-    //        this.tooltip.instance.placement = this.tooltipPlacement;
-    //        this.tooltip.instance.animation = this.tooltipAnimation;
-    //    } else {
-    //        const tooltip = this.content as ErrorTooltipContent;
-    //        tooltip.hostElement = this.viewContainerRef.element.nativeElement;
-    //        tooltip.placement = this.tooltipPlacement;
-    //        tooltip.animation = this.tooltipAnimation;
-    //        tooltip.show();
-    //    }
-    //}
+            this.tooltip = this.viewContainerRef.createComponent(this.tooltipFactory);
+            this.tooltip.instance.initialize(this.control, this.viewContainerRef.element.nativeElement, this.tooltipPlacement);
+        } else if (this.tooltip) {
+            this.tooltip.instance.updateErrorMessage();
+        }
+    }
+    private destroy = (): void => {
+        if (this.visible) {
 
-    //@HostListener("focusout")
-    //@HostListener("mouseleave")
-    //hide(): void {
-    //    if (!this.visible)
-    //        return;
+            this.visible = false;
 
-    //    this.visible = false;
-    //    if (this.tooltip)
-    //        this.tooltip.destroy();
+            if (this.tooltip)
+                this.tooltip.destroy();
+        }    
+    }
 
-    //    if (this.content instanceof ErrorTooltipContent)
-    //        (this.content as ErrorTooltipContent).hide();
-    //}
-
+    @HostBinding('style.border') get hostBorder() { return this.visible ? '2px solid #FF4844' : null };
 }

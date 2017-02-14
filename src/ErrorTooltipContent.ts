@@ -1,18 +1,19 @@
-import {Component, Input, AfterViewInit, ElementRef, ChangeDetectorRef} from "@angular/core";
+import { Component, Input, ElementRef, ChangeDetectorRef } from "@angular/core";
+import { NgControl } from '@angular/forms';
 
 @Component({
     selector: "error-tooltip-content",
     template: `
 <div class="tooltip {{ placement }}"
-     [style.top]="top + 'px'"
-     [style.left]="left + 'px'"
+     [style.top.px]="tooltipPosition.top"
+     [style.left.px]="tooltipPosition.left"
      [class.in]="isIn"
      [class.fade]="isFade"
      role="tooltip">
     <div class="tooltip-arrow"></div> 
     <div class="tooltip-inner">
         <ng-content></ng-content>
-        {{ content }}
+        {{ errorMessage }}
     </div> 
 </div>
 `,
@@ -25,72 +26,101 @@ import {Component, Input, AfterViewInit, ElementRef, ChangeDetectorRef} from "@a
 }
 `]
 })
-export class ErrorTooltipContent implements AfterViewInit {
-
-    // -------------------------------------------------------------------------
-    // Inputs / Outputs 
-    // -------------------------------------------------------------------------
-
-    @Input()
-    hostElement: HTMLElement;
-
-    @Input()
-    content: string;
-
-    @Input()
-    placement: "top"|"bottom"|"left"|"right" = "bottom";
-
-    @Input()
-    animation: boolean = true;
+export class ErrorTooltipContent {
 
     // -------------------------------------------------------------------------
     // Properties
     // -------------------------------------------------------------------------
 
-    top: number = -100000;
-    left: number = -100000;
-    isIn: boolean = false;
-    isFade: boolean = false;
+    hostElement: HTMLElement;
+    control: NgControl;
+    placement: "top" | "bottom" | "left" | "right" = "bottom";
+
+    private get errorMessage(): string { return this.errorMessages ? this.errorMessages.join('\n') : null; }
+    private errorMessages: string[];
+
+    tooltipPosition: { top: number, left: number } = { top: -100000, left: -100000 };
+    isIn: boolean = true;
+    isFade: boolean = true;
 
     // -------------------------------------------------------------------------
     // Constructor
     // -------------------------------------------------------------------------
 
     constructor(private element: ElementRef,
-                private cdr: ChangeDetectorRef) {
+        private cdr: ChangeDetectorRef) {
     }
 
     // -------------------------------------------------------------------------
     // Lifecycle callbacks
     // -------------------------------------------------------------------------
-
-    ngAfterViewInit(): void {
-        this.show();
-        this.cdr.detectChanges();
-    }
+    
 
     // -------------------------------------------------------------------------
     // Public Methods
     // -------------------------------------------------------------------------
-    
-    show(): void {
+
+    show = (): void => {
         if (!this.hostElement)
             return;
 
-        const p = this.positionElements(this.hostElement, this.element.nativeElement.children[0], this.placement);
-        this.top = p.top;
-        this.left = p.left;
+        this.positionTooltip();
         this.isIn = true;
-        if (this.animation)
-            this.isFade = true;
+        this.isFade = true;
     }
 
-    hide(): void {
-        this.top = -100000;
-        this.left = -100000;
+    hide = (): void => {
+        this.tooltipPosition = { top: -100000, left: -100000 };
         this.isIn = true;
-        if (this.animation)
-            this.isFade = false;
+        this.isFade = false;
+    }
+
+    initialize = (control: NgControl, hostElement: HTMLElement, placement: 'top' | 'bottom' | 'left' | 'right'): void => {
+        this.control = control;
+        this.hostElement = hostElement;
+        this.placement = placement;
+
+        this.updateErrorMessage();
+        this.cdr.detectChanges();
+        this.show();
+    }
+
+    updateErrorMessage = (): void => {
+        let errMsgs: string[] = [];
+        for (let propName in this.control.errors) {
+            if (this.control.errors.hasOwnProperty(propName)) {
+
+                let errMsg: string;
+                switch (propName) {
+                    case 'required':
+                        errMsg = 'Required';
+                        break;
+                    case 'minlength':
+                        errMsg = `Must contain at least ${this.control.errors[propName].requiredLength} characters`
+                        break;
+                    case 'maxlength':
+                        errMsg = `Cannot contain more than ${this.control.errors[propName].requiredLength} characters`
+                        break;
+                    case 'pattern':
+                        errMsg = 'Invalid value';
+                        break;
+                    default:
+                        break; // Do nothing
+                }
+
+                if (!!errMsg) errMsgs.push(errMsg);
+            }
+        }
+
+        let updatePositioning = this.hasNewErrorMessages(errMsgs);
+        //console.log(this.element.nativeElement.children[0]);
+        this.errorMessages = errMsgs;
+        //let position = this.positionElements(this.hostElement, this.element.nativeElement.children[0], this.placement);
+        //console.log(position);
+        if (updatePositioning) {
+            this.cdr.detectChanges();
+            this.positionTooltip(); // adjust positioning
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -136,21 +166,21 @@ export class ErrorTooltipContent implements AfterViewInit {
                     left: shiftWidth[pos0]()
                 };
                 break;
-            
+
             case "left":
                 targetElPos = {
                     top: shiftHeight[pos1](),
                     left: hostElPos.left - targetElWidth
                 };
                 break;
-            
+
             case "bottom":
                 targetElPos = {
                     top: shiftHeight[pos0](),
                     left: shiftWidth[pos1]()
                 };
                 break;
-            
+
             default:
                 targetElPos = {
                     top: hostElPos.top - targetElHeight,
@@ -181,7 +211,7 @@ export class ErrorTooltipContent implements AfterViewInit {
         };
     }
 
-    private offset(nativeEl:any): { width: number, height: number, top: number, left: number } {
+    private offset(nativeEl: any): { width: number, height: number, top: number, left: number } {
         const boundingClientRect = nativeEl.getBoundingClientRect();
         return {
             width: boundingClientRect.width || nativeEl.offsetWidth,
@@ -197,13 +227,13 @@ export class ErrorTooltipContent implements AfterViewInit {
 
         if (window.getComputedStyle)
             return (window.getComputedStyle(nativeEl) as any)[cssProp];
-        
+
         // finally try and get inline style
         return (nativeEl.style as any)[cssProp];
     }
 
     private isStaticPositioned(nativeEl: HTMLElement): boolean {
-        return (this.getStyle(nativeEl, "position") || "static" ) === "static";
+        return (this.getStyle(nativeEl, "position") || "static") === "static";
     }
 
     private parentOffsetEl(nativeEl: HTMLElement): any {
@@ -214,4 +244,21 @@ export class ErrorTooltipContent implements AfterViewInit {
         return offsetParent || window.document;
     }
 
+    private positionTooltip = (): void => {
+        this.tooltipPosition = this.positionElements(this.hostElement, this.element.nativeElement.children[0], this.placement);
+    }
+
+    private hasNewErrorMessages = (newErrorMessages: string[]): boolean => {
+        if (!this.errorMessages || this.errorMessages.length !== newErrorMessages.length) {
+            return true;
+        } else {
+            for (let i = 0; i < newErrorMessages.length; i++) {
+                if (this.errorMessages.findIndex((errorMessage) => { return errorMessage === newErrorMessages[i]; }) === -1) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
 }
