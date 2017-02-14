@@ -1,64 +1,61 @@
 {
-    "name": "angular-error-tooltip",
-    "version": "0.0.1",
-    "description": "Angular2 tooltip control specifically designed for error messages.",
-    "license": "MIT",
-    "readmeFilename": "README.md",
-    "private": false,
-    "author": {
-        "name": "Will McNaughton",
-        "email": "wsmcnaughton@gmail.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/NaughtyMC/angular-error-tooltip.git"
-    },
-    "bugs": {
-        "url": "https://github.com/NaughtyMC/angular-error-tooltip/issues"
-    },
-    "tags": [
-        "tooltip",
-        "error-message",
-        "angular",
-        "angular2",
-        "typescript"
-    ],
-    "peerDependencies": {
-        "@angular/core": "^2.0.0"
-    },
-    "devDependencies": {
-        "@angular/common": "^4.0.0-beta.6",
-        "@angular/compiler": "^4.0.0-beta.6",
-        "@angular/compiler-cli": "^4.0.0-beta.6",
-        "@angular/core": "^4.0.0-beta.6",
-        "@angular/forms": "^4.0.0-beta.6",
-        "@angular/platform-browser": "^4.0.0-beta.6",
-        "@angular/platform-browser-dynamic": "^4.0.0-beta.6",
-
-        "@types/node": "^7.0.0",
-        "bootstrap": "^3.3.7",
-        "chai": "^3.4.1",
-        "del": "^2.2.2",
-        "es6-shim": "^0.35.2",
-        "gulp": "^3.9.0",
-        "gulp-file": "^0.3.0",
-        "gulp-mocha": "^3.0.1",
-        "gulp-rename": "^1.2.2",
-        "gulp-replace": "^0.5.4",
-        "gulp-shell": "^0.5.1",
-        "gulp-tslint": "^7.0.1",
-        "gulp-typescript": "^3.1.4",
-        "gulp-uglify": "^2.0.0",
-        "gulpclass": "^0.1.1",
-        "mocha": "^3.2.0",
-        "reflect-metadata": "0.1.9",
-        "rxjs": "^5.0.3",
-        "sinon": "^1.17.7",
-        "sinon-chai": "^2.8.0",
-        "systemjs": "0.19.42",
-        "tslint": "^4.3.1",
-        "tslint-stylish": "^2.1.0-beta",
-        "typescript": "^2.1.5",
-        "zone.js": "^0.7.6"
-    }
+  "name": "angular-error-tooltip",
+  "version": "0.0.1",
+  "description": "Angular2 tooltip control specifically designed for error messages.",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "private": false,
+  "author": {
+    "name": "Will McNaughton",
+    "email": "wsmcnaughton@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NaughtyMC/angular-error-tooltip.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NaughtyMC/angular-error-tooltip/issues"
+  },
+  "tags": [
+    "tooltip",
+    "error-message",
+    "angular",
+    "angular2",
+    "typescript"
+  ],
+  "devDependencies": {
+    "@angular/common": "^4.0.0-beta.6",
+    "@angular/compiler": "^4.0.0-beta.6",
+    "@angular/compiler-cli": "^4.0.0-beta.6",
+    "@angular/core": "^4.0.0-beta.6",
+    "@angular/forms": "^4.0.0-beta.6",
+    "@angular/platform-browser": "^4.0.0-beta.6",
+    "@angular/platform-browser-dynamic": "^4.0.0-beta.6",
+    "@types/node": "^7.0.0",
+    "bootstrap": "^3.3.7",
+    "chai": "^3.4.1",
+    "del": "^2.2.2",
+    "es6-shim": "^0.35.2",
+    "gulp": "^3.9.0",
+    "gulp-file": "^0.3.0",
+    "gulp-mocha": "^3.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-shell": "^0.5.1",
+    "gulp-tslint": "^7.0.1",
+    "gulp-typescript": "^3.1.4",
+    "gulp-uglify": "^2.0.0",
+    "gulpclass": "^0.1.1",
+    "mocha": "^3.2.0",
+    "reflect-metadata": "0.1.9",
+    "rxjs": "^5.0.3",
+    "sinon": "^1.17.7",
+    "sinon-chai": "^2.8.0",
+    "systemjs": "0.19.42",
+    "ts-node": "^2.1.0",
+    "tslint": "^4.3.1",
+    "tslint-stylish": "^2.1.0-beta",
+    "typescript": "^2.1.5",
+    "zone.js": "^0.7.6"
+  }
 }
