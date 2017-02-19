@@ -1,5 +1,5 @@
-import { Directive, HostBinding, ComponentRef, ViewContainerRef, Input, ComponentFactoryResolver, ComponentFactory, OnInit, OnDestroy } from "@angular/core";
-import { NgControl } from '@angular/forms'
+import { Directive, HostListener, HostBinding, ComponentRef, ViewContainerRef, Input, ComponentFactoryResolver, ComponentFactory, OnInit, OnDestroy, Optional, Host, SkipSelf } from "@angular/core";
+import { NgControl, FormGroupDirective } from '@angular/forms'
 import { Subscription } from 'rxjs/Subscription';
 import { ErrorTooltipContent } from "./ErrorTooltipContent";
 
@@ -14,8 +14,9 @@ export class ErrorTooltip implements OnInit, OnDestroy {
 
     private tooltip: ComponentRef<ErrorTooltipContent>;
     private tooltipFactory: ComponentFactory<ErrorTooltipContent>;
-    private visible: boolean;
+    private initialized: boolean;
     private statusSubscription: Subscription;
+    private formSubmissionSubscription: Subscription;
 
     // -------------------------------------------------------------------------
     // Constructor
@@ -24,7 +25,8 @@ export class ErrorTooltip implements OnInit, OnDestroy {
     constructor
         (private viewContainerRef: ViewContainerRef,
         private resolver: ComponentFactoryResolver,
-        private control: NgControl
+        private control: NgControl,
+        @Optional() @Host() @SkipSelf() private parent: FormGroupDirective
     ) {
     }
 
@@ -41,7 +43,6 @@ export class ErrorTooltip implements OnInit, OnDestroy {
     // -------------------------------------------------------------------------
     // Methods
     // -------------------------------------------------------------------------
-
     ngOnInit() {
         this.tooltipFactory = this.resolver.resolveComponentFactory(ErrorTooltipContent);
 
@@ -49,17 +50,26 @@ export class ErrorTooltip implements OnInit, OnDestroy {
             status => this.processStatus(status)
         );
 
-        // initialize tooltip on startup (if applicable)
-        this.processStatus(this.control.control.status as ('VALID' | 'INVALID' | 'PENDING' | 'DISABLED'));
+        this.formSubmissionSubscription = this.parent.ngSubmit.subscribe((e: any) => this.processStatus(this.control.control.status as ('VALID' | 'INVALID' | 'PENDING' | 'DISABLED')));
+    }
+
+    @HostListener('focusin')
+    show(): void {
+        this.tooltip && this.tooltip.instance.show();
+    }
+    @HostListener('focusout')
+    hide(): void {
+        this.tooltip && this.tooltip.instance.hide();
     }
     ngOnDestroy() {
-        this.statusSubscription.unsubscribe();
+        this.statusSubscription && this.statusSubscription.unsubscribe();
+        this.formSubmissionSubscription && this.formSubmissionSubscription.unsubscribe();
     }
 
     private processStatus = (status: 'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'): void => {
         switch (status) {
             case 'INVALID':
-                this.createOrUpdate();
+                this.update();
                 break;
             case 'VALID':
             case 'DISABLED':
@@ -70,26 +80,27 @@ export class ErrorTooltip implements OnInit, OnDestroy {
                 break; // do nothing
         }
     }
-    private createOrUpdate = (): void => {
-        if (!this.visible) {
 
-            this.visible = true;
+    private create = (): void => {
+        if (!this.tooltip && this.control.invalid) {
 
             this.tooltip = this.viewContainerRef.createComponent(this.tooltipFactory);
             this.tooltip.instance.initialize(this.control, this.viewContainerRef.element.nativeElement, this.tooltipPlacement);
-        } else if (this.tooltip) {
+        }
+    }
+    private update = (): void => {
+        if (this.tooltip) {
             this.tooltip.instance.updateErrorMessage();
+        } else {
+            this.create();
         }
     }
     private destroy = (): void => {
-        if (this.visible) {
-
-            this.visible = false;
-
-            if (this.tooltip)
-                this.tooltip.destroy();
+        if (this.tooltip) {
+            this.tooltip.destroy();
+            this.tooltip = null;
         }    
     }
 
-    @HostBinding('style.border') get hostBorder() { return this.visible ? '2px solid #FF4844' : null };
+    @HostBinding('style.border') get hostBorder() { return this.tooltip ? '2px solid #FF4844' : null };
 }

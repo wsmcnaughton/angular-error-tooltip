@@ -82,7 +82,6 @@ export class ErrorTooltipContent {
 
         this.updateErrorMessage();
         this.cdr.detectChanges();
-        this.show();
     }
 
     updateErrorMessage = (): void => {
@@ -113,10 +112,8 @@ export class ErrorTooltipContent {
         }
 
         let updatePositioning = this.hasNewErrorMessages(errMsgs);
-        //console.log(this.element.nativeElement.children[0]);
         this.errorMessages = errMsgs;
-        //let position = this.positionElements(this.hostElement, this.element.nativeElement.children[0], this.placement);
-        //console.log(position);
+
         if (updatePositioning) {
             this.cdr.detectChanges();
             this.positionTooltip(); // adjust positioning
