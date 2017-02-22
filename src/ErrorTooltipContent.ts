@@ -107,7 +107,7 @@ export class ErrorTooltipContent {
                         break; // Do nothing
                 }
 
-                if (!!errMsg) errMsgs.push(errMsg);
+                if (errMsg) errMsgs.push(errMsg);
             }
         }
 

@@ -22,91 +22,18 @@ Lightweight tooltip directive that displays a FormControl's error messages to us
     }
     ```
 
-## Usage
+## Samples
 
-Coming soon...
-<!--
-```html
-<span tooltip="content to be shown in the tooltip"
-      [tooltipDisabled]="false"
-      [tooltipAnimation]="true"
-      tooltipPlacement="top">
-    element on which this tooltip is applied.
-</span>
-```
+[Sample 1](https://github.com/NaughtyMC/angular-error-tooltip/blob/master/sample/sample1):
 
-Example of usage with dynamic html content:
+![sample1](sample/demo/demo.gif "sample1") 
 
-```html
-<tooltip-content #myTooltip [animation]="true" placement="left">
-    <b>Very</b> <span style="color: #C21F39">Dynamic</span> <span style="color: #00b3ee">Reusable</span>
-    <b><i><span style="color: #ffc520">Tooltip With</span></i></b> <small>Html support</small>.
-</tooltip-content>
 
-<button [tooltip]="myTooltip">element on which this tooltip is applied.</button>
-```
+## Contributing
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct.
 
-* `<span tooltip>`:
-    * `tooltip="string"` The message to be shown in the tooltip.
-    * `[tooltipDisabled]="true|false"` Indicates if tooltip should be disabled. If tooltip is disabled then it will not be shown. Default is **false**
-    * `[tooltipAnimation]="true|false"` Indicates if all tooltip should be shown with animation or not. Default is **true**.
-    * `tooltipPlacement="top|bottom|left|right"` Indicates where the tooltip should be placed. Default is **"bottom"**.
-* `<tooltip-content>`:
-    * `[animation]="true|false"` Indicates if all tooltip should be shown with animation or not. Default is **true**.
-    * `placement="top|bottom|left|right"` Indicates where the tooltip should be placed. Default is **"bottom"**.-->
+## License
+This project is licensed under the MIT License. See the [LICENSE.txt](LICENSE.txt) file for details.
 
-## Sample
-
-Coming soon...
-
-<!--```typescript
-import {Component} from "@angular/core";
-import {TooltipModule} from "ngx-tooltip";
-
-@Component({
-    selector: "app",
-    template: `
-<div class="container">
-
-    <p>
-        It is a long established <span tooltip="Hello fact!"><b>fact</b></span> that a reader will be distracted by the readable content of a page when looking at its layout.
-        The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.
-        <span tooltip="many, but not all" tooltipPlacement="left"><b>Many desktop</b></span> publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.
-        <span tooltip="various, but not all" tooltipPlacement="right"><b>Various versions</b></span> have evolved over the years, sometimes by accident, <span tooltip="another hint" tooltipPlacement="top"><b>sometimes on purpose</b></span> (injected humour and the like)
-    </p>
-
-    <div>
-        <tooltip-content #myTooltip>
-            <b>Very</b> <span style="color: #C21F39">Dynamic</span> <span style="color: #00b3ee">Reusable</span>
-            <b><i><span style="color: #ffc520">Tooltip With</span></i></b> <small>Html support</small>.
-        </tooltip-content>
-
-        <button [tooltip]="myTooltip">hover this button to see a tooltip</button>
-    </div>
-
-</div>
-`
-})
-export class App {
-
-}
-
-@NgModule({
-    imports: [
-        // ...
-        TooltipModule
-    ],
-    declarations: [
-        App
-    ],
-    bootstrap: [
-        App
-    ]
-})
-export class AppModule {
-
-}
-```
-
-Take a look on samples in [./sample](https://github.com/NaughtyMC/angular-error-tooltip/tree/master/sample) for more examples of
-usages.-->
+## Acknowledgements
+ * Special thanks to [Umed Khudoiberdiev](https://github/com/pleerock), whose [ngx-tooltip](https://github.com/pleerock/ng2-tooltip) served as a backbone for this project
