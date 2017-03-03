@@ -1,7 +1,7 @@
 import { Component, NgModule } from "@angular/core";
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 import { BrowserModule } from "@angular/platform-browser";
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ErrorTooltipModule } from "../../src/index";
 
 @Component({
@@ -36,6 +36,15 @@ import { ErrorTooltipModule } from "../../src/index";
 })
 export class Sample1App {
 
+    private sampleForm: FormGroup;
+
+    constructor(private fb: FormBuilder) {
+        this.sampleForm = this.fb.group({
+            sample1: ['', [Validators.required]],
+            sample2: ['', [Validators.minLength(3)]],
+            sample3: ['', [Validators.maxLength(3)]]
+        })
+    }
 }
 
 @NgModule({
